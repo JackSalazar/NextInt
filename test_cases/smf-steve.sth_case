@@ -1,0 +1,17 @@
+[default]
+DRIVER=java_subroutine
+ENTRY=nextInt
+
+[global]
+EXIT_STATUS=IGNORE
+
+[case]
+ARGS=10
+INPUT=95678
+OUTPUT=95678
+
+[case]
+OPTIONS="-R hex"
+ARGS=16
+INPUT=FFFF
+OUTPUT=ffff
