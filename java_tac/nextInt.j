@@ -15,7 +15,8 @@ public static int nextInt (int radix) { // you are going from base radix to base
     digit = glyph2int(buffer[0], radix);
     for(number=0; digit != -1 ;) {
       //System.out.println("Buffer "+ i +" is "+ buffer[i]);
-      number = (number * radix) + digit ; 
+      //number = (number * radix) + digit ; 
+      number = number * radix;
       digit = glyph2int(buffer[i], radix);
       i = i + 1;
       //System.out.println("number is" + number);
