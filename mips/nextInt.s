@@ -6,20 +6,26 @@ buff:   .space 256                        #static char [] buffer = new char[256]
         .include "include/syscalls.s"
         .include "include/subroutine.s"
 
+
 nextInt: nop                        #public static int nextInt (int radix) { // you are going from base radix to base 10
         #bookkeeping
         #a0: radix                #
         #t0: number                #    int number;
         #t1: digit;                #    int digit;
         #t2: i;                #    int i;
-                       #
+        #t6: buff address
+        #t7: radix               #
         add $t2, $zero, 1                #    i = 1;
                         #
+        move $t7, $a0
                         #
-        read_s(buffer, 255)                #    mips.read_s(buffer, 255);
+        la $t6 buff
+        read_si $t6, 255                #    mips.read_s(buffer, 255);
+
                         #    //System.out.println("Buffer 0 is "+ buffer[0]);
                         #
-                        #    digit = glyph2int(buffer[0], radix);
+        lb $a0, 0($t6)
+        jal glyph2int               #    digit = glyph2int(buffer[0], radix);
                         #    for(number=0; digit != -1 ;) {
                         #      //System.out.println("Buffer "+ i +" is "+ buffer[i]);
                         #      //number = (number * radix) + digit ; 
