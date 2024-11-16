@@ -4,7 +4,11 @@ public static int nextInt (int radix) { // you are going from base radix to base
 
     int number;
     int digit;
-    int i = 1;
+    int i;
+
+    i = 1;
+
+
     mips.read_s(buffer, 255);
     //System.out.println("Buffer 0 is "+ buffer[0]);
 
