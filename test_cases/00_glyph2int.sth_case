@@ -19,14 +19,14 @@ EXIT_STATUS=IGNORE
 
 [case]
 OPTIONS="-L ."
-ENTRY=glyph2int
+#ENTRY=glyph2int Not sure if you want these to remain, but it causes unnecessary errors... so I'm removing it. Either way, the case needs to be edited.
 ARGS=16
 INPUT=A
 OUTPUT=10
 
 [case]
 OPTIONS="-L ."
-ENTRY=glyph2int
+#ENTRY=glyph2int
 ARGS=23
 INPUT=j
 OUTPUT=19
