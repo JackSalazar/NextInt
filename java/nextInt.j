@@ -4,6 +4,8 @@ public static int nextInt (int radix) {
 
     int number;
     int digit;
+    mips.read_s(buffer, 255);
+    
 
     digit = glyph2int(radix);
     for(number=0; digit != -1 ;) {
