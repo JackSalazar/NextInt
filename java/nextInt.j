@@ -4,19 +4,21 @@ public static int nextInt (int radix) {
 
     int number;
     int digit;
+    int i = 1;
     mips.read_s(buffer, 255);
-    
 
-    digit = glyph2int(radix);
+
+    digit = glyph2int(buffer[0], radix);
     for(number=0; digit != -1 ;) {
       number = (number * radix) + digit ; 
-      digit = glyph2int(radix);
+      digit = glyph2int(buffer[i], radix);
+      i = i + 1;
     }
 
     return number;
 }
 
-public static int glyph2int(int radix) {
+public static int glyph2int(char c, int radix) {
 
     int input;
     int digit;
