@@ -1,17 +1,22 @@
-.globl
-.data
-buff: .space 256                        #static char [] buffer = new char[256];
+        .globl nextInt
+        .data
+buff:   .space 256                        #static char [] buffer = new char[256];
+        .text                #
+        .include "include/stack.s"        
+        .include "include/syscalls.s"
+        .include "include/subroutine.s"
+
+nextInt: nop                        #public static int nextInt (int radix) { // you are going from base radix to base 10
+        #bookkeeping
+        #a0: radix                #
+        #t0: number                #    int number;
+        #t1: digit;                #    int digit;
+        #t2: i;                #    int i;
+                       #
+        add $t2, $zero, 1                #    i = 1;
                         #
-                        #public static int nextInt (int radix) { // you are going from base radix to base 10
                         #
-                        #    int number;
-                        #    int digit;
-                        #    int i;
-                        #
-                        #    i = 1;
-                        #
-                        #
-                        #    mips.read_s(buffer, 255);
+        read_s(buffer, 255)                #    mips.read_s(buffer, 255);
                         #    //System.out.println("Buffer 0 is "+ buffer[0]);
                         #
                         #    digit = glyph2int(buffer[0], radix);
@@ -28,8 +33,10 @@ buff: .space 256                        #static char [] buffer = new char[256];
                         #    return number;
                         #}
                         #
-                        #public static int glyph2int(char c, int radix) {
-                        #
+glyph2int: nop                        #public static int glyph2int(char c, int radix) {
+        #bookkeeping
+        #t3: c, input
+        #a0: radix                #
                         #    char input = c;
                         #    int digit; 
                         #
@@ -59,7 +66,11 @@ buff: .space 256                        #static char [] buffer = new char[256];
                         #    return digit;
                         #}
                         #
-                        #public static boolean in_range(char value, char min, char max){
+in_range: nop                        #public static boolean in_range(char value, char min, char max){
+        #bookkeeping
+        #t3: value
+        #t4: min
+        #t5: max                
                         #    if (value >= min){
                         #        if (value <= max){
                         #            return true;
