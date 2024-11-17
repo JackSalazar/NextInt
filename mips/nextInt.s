@@ -15,6 +15,7 @@ nextInt: nop                        #public static int nextInt (int radix) { // 
         #t2: i;                #    int i;
         #t6: buff address
         #t7: radix               #
+        
         add $t2, $zero, 1                #    i = 1;
                         #
         move $t7, $a0
@@ -24,13 +25,24 @@ nextInt: nop                        #public static int nextInt (int radix) { // 
 
                         #    //System.out.println("Buffer 0 is "+ buffer[0]);
                         #
+
+        #add $a0, $zero, $zero #testing to check that the jal works
+        li $a0, 5
+        li $v0, 1
+        syscall
+        jr $ra #end of test
+
         lb $a0, 0($t6)
-        jal glyph2int               #    digit = glyph2int(buffer[0], radix);
-                        #    for(number=0; digit != -1 ;) {
+        jal glyph2int     #PRAY THIS WORKSSSSSSSSSSSSSSSSS          #    digit = glyph2int(buffer[0], radix);
+
+
+        #add $t0, $zero, $zero                #   number=0
+        #beq $t1, '-1'                #    for(; digit != -1 ;) {
                         #      //System.out.println("Buffer "+ i +" is "+ buffer[i]);
                         #      //number = (number * radix) + digit ; 
-                        #      number = number * radix;
-                        #      number = number + digit;
+        #mult $t0, $t7                 #      number = number * radix;
+        #mflo $t0
+        #add $t0, $t0, $t1                #      number = number + digit;
                         #      digit = glyph2int(buffer[i], radix);
                         #      i = i + 1;
                         #      //System.out.println("number is" + number);
@@ -43,6 +55,7 @@ glyph2int: nop                        #public static int glyph2int(char c, int r
         #bookkeeping
         #t3: c, input
         #a0: radix                #
+        add $v0, $zero, $t7 
                         #    char input = c;
                         #    int digit; 
                         #
