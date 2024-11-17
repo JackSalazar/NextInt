@@ -17,7 +17,18 @@
   restore_state()
 .end_macro
 
-
+#my own code
+.macro call(%sub, %arg0, %arg1, %arg2)
+  save_state()
+  push $a0 $a1 $a2
+  move $a0, %arg0
+  move $a1, %arg1
+  move $a2, %arg2
+  jal %sub
+  pop $a0 $a1 $a2
+  restore_state()
+.end_macro
+#end of my own code
 
 .macro save_state()
        push($gp, $sp, $fp, $ra)
