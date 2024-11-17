@@ -7,77 +7,70 @@ buff:   .space 256                        #static char [] buffer = new char[256]
         .include "include/subroutine.s"
 
 
+        #BEGIN TESTING
+        #li $v0, 1
+        #move $t8, $a0 #preserves $a0 previous value
+        #move $a0, $t0
+        #syscall
+        #move $a0, $t8 #restores $a0 previous value
+        #END TESTING
 
 
-nextInt: nop                        #public static int nextInt (int radix) { // you are going from base radix to base 10
+nextInt: nop                         #public static int nextInt (int radix) { // you are going from base radix to base 10
         #bookkeeping
-        #a0: radix                #
-        #a1:
+        #a0: radix                   #
+        #a1: bufnum
         #a2:
         #a3:
-        #t0: number                #    int number;
-        #t1: digit;                #    int digit;
-        #t2: i;                #    int i;
+        #t0: number                  #    int number;
+        #t1: digit;                  #    int digit;
+        #t2: i;                      #    int i;
         #t6: buff address
-        #t7: radix               #
+        #t7: radixvar                #    int radixvar
         
-        add $t2, $zero, $zero                #    i = 1;
-                        #
-        move $t7, $a0
-                        #
+        add $t2, $zero, $zero        #    i = 1;
+                                     #
+        move $t7, $a0                #preserves radix value
+                                     #
         la $t6 buff
-        read_si $t6, 255                #    mips.read_s(buffer, 255);
+        read_si $t6, 255             #    mips.read_s(buffer, 255);
 
-                        #    //System.out.println("Buffer 0 is "+ buffer[0]);
-                        #
+        lb $a1, 0($t6)               # $a0 = buffer[0]
+        call glyph2int $a1, $t7      #    digit = glyph2int(buffer[0], radix);
+        move $t1, $v0                #this moves the result to digit, which has to be split from the above equation^
 
+        add $t0, $zero, $zero        #   number=0
 
-        lb $a0, 0($t6)
-        call glyph2int $a0, $t7     #    digit = glyph2int(buffer[0], radix);
-        move $t1, $v0       #this moves the result to digit, which has to be split from the above equation^
+        add $t3, $t6, $t2            #ensures that buffer[1] is read
+        lb $a1, 0($t3)
 
-        add $t0, $zero, $zero                #   number=0
-                                            #CONFIRMED as of now, number = 0
-
-        add $t3, $t6, $t2 #ensures that buffer[1] is read
-        lb $a0, 0($t3)
-
-loop:   beq $t1, -1, done                #    for(; digit != -1 ;) {
-body: nop                        #      //System.out.println("Buffer "+ i +" is "+ buffer[i]);
-                        #      //number = (number * radix) + digit ; 
-        mult $t0, $t7                 #      number = number * radix;
+loop:   beq $t1, -1, done            #    for(; digit != -1 ;) {
+body: nop                            # 
+        mult $t0, $t7                #      number = number * radix;
         mflo $t0
 
-        add $t0, $t0, $t1                #      number = number + digit;
+        add $t0, $t0, $t1            #      number = number + digit;
 
-                #BEGIN TESTING
-        li $v0, 1
-        move $t8, $a0 #preserves $a0 previous value
-        move $a0, $t0
-        syscall
-        move $a0, $t8 #restores $a0 previous value
-        #END TESTING
-        call glyph2int $a0, $t7                #      digit = glyph2int(buffer[i], radix);
-        beq $t1, -1, done #redundant, but checking for additional loop issues
-        move $t1, $v0   #this moves the result to digit, which has to be split from the above equation^
+
+
+        call glyph2int $a1, $t7      #      digit = glyph2int(buffer[i], radix);
+        beq $t1, -1, done            #redundant, but checking for additional loop issues
+        move $t1, $v0                #this moves the result to digit, which has to be split from the above equation^
 next:   nop
-        addi $t2, $t2, 1                #      i = i + 1;
-        add $t3, $t6, $t2 #method of incrementing, forgot the name but you have a base pointer that is static, then add from there
-        lb $a0, 0($t3)
+        addi $t2, $t2, 1             #      i = i + 1;
+        add $t3, $t6, $t2            #method of incrementing, forgot the name but you have a base pointer that is static, then add from there
+        lb $a1, 0($t3)
 
         j loop
-                        #      //System.out.println("number is" + number);
-                        #    }
+
+                                     #    }
 done:                  
     
-                        #    //System.out.println("number is" + number);
-        move $v0, $t0                    #    return number;
-        #BEGIN TESTING
-        li $v0, 0
-        #END TESTINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-        jr $ra                    #}
-                        #
-glyph2int: nop                        #public static int glyph2int(char c, int radix) {
+        move $v0, $t0                #    return number;
+        
+        jr $ra                       #}
+                                     #
+glyph2int: nop                       #public static int glyph2int(char c, int radix) {
         #bookkeeping
         #a0: c, input
         #should be $a1, t1: digit
@@ -88,8 +81,6 @@ glyph2int: nop                        #public static int glyph2int(char c, int r
         #redundant                #    char input = c;
         #also redundant                #    int digit; 
                         #
-                        #    //mips.read_c();
-                        #    //input = mips.retval();
                         #
                         #
 initifnum: nop
@@ -141,17 +132,7 @@ ifoob: addi $a2, $t7, -1
         li $t1, -1                #        digit = -1;
                         #    }
 glyph2intdone:  
-        #start of testing
-        #li $v0, 1
-        #
-        #move $a0, $t3
-        #syscall
-        #move $a0, $t4
-        #syscall
-        #move $a0, $t1
-        #syscall
-        #end of testing
-                      #
+
         move $v0, $t1
         jr $ra #if this doesn't work, try  not moving t1 to v0, as it is redundant regardless
                         #    return digit;

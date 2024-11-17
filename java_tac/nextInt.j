@@ -2,28 +2,32 @@ static char [] buffer = new char[256];
 
 public static int nextInt (int radix) { // you are going from base radix to base 10
 
+    char bufnum;
     int number;
     int digit;
     int i;
 
+    int radixvar;
+
     i = 1;
 
 
-    mips.read_s(buffer, 255);
-    //System.out.println("Buffer 0 is "+ buffer[0]);
 
-    digit = glyph2int(buffer[0], radix);
+    mips.read_s(buffer, 255);
+    
+
+    bufnum = buffer[0];
+    digit = glyph2int(bufnum, radix);
     number=0;
     for(; digit != -1 ;) {
-      //System.out.println("Buffer "+ i +" is "+ buffer[i]);
-      //number = (number * radix) + digit ; 
+      
       number = number * radix;
       number = number + digit;
       digit = glyph2int(buffer[i], radix);
       i = i + 1;
-      //System.out.println("number is" + number);
+      
     }
-    //System.out.println("number is" + number);
+
     return number;
 }
 
@@ -32,8 +36,6 @@ public static int glyph2int(char c, int radix) {
     char input = c;
     int digit; 
 
-    //mips.read_c();
-    //input = mips.retval();
 
 
     if (in_range(input, '0', '9')) {//0' <= input && input <= '9') {
