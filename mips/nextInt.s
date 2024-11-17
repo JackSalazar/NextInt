@@ -26,27 +26,26 @@ nextInt: nop                        #public static int nextInt (int radix) { // 
                         #    //System.out.println("Buffer 0 is "+ buffer[0]);
                         #
 
-        #add $a0, $zero, $zero #testing to check that the jal works
-        li $a0, 5
-        li $v0, 1
-        syscall
-        jr $ra #end of test
 
         lb $a0, 0($t6)
-        jal glyph2int     #PRAY THIS WORKSSSSSSSSSSSSSSSSS          #    digit = glyph2int(buffer[0], radix);
+        call glyph2int $a0, $t7     #PRAY THIS WORKSSSSSSSSSSSSSSSSS          #    digit = glyph2int(buffer[0], radix);
+        move $t1, $v0       #this moves the result to digit, which has to be split from the above equation^
 
-
-        #add $t0, $zero, $zero                #   number=0
-        #beq $t1, '-1'                #    for(; digit != -1 ;) {
-                        #      //System.out.println("Buffer "+ i +" is "+ buffer[i]);
+        add $t0, $zero, $zero                #   number=0
+loop:        beq $t1, '-1', done                #    for(; digit != -1 ;) {
+body: nop                        #      //System.out.println("Buffer "+ i +" is "+ buffer[i]);
                         #      //number = (number * radix) + digit ; 
-        #mult $t0, $t7                 #      number = number * radix;
-        #mflo $t0
-        #add $t0, $t0, $t1                #      number = number + digit;
-                        #      digit = glyph2int(buffer[i], radix);
-                        #      i = i + 1;
+        mult $t0, $t7                 #      number = number * radix;
+        mflo $t0
+        add $t0, $t0, $t1                #      number = number + digit;
+        call glyph2int $a0, $t7                #      digit = glyph2int(buffer[i], radix);
+        move $t1, $v0   #this moves the result to digit, which has to be split from the above equation^
+next:   nop
+        addi $t2, $t2, 1                #      i = i + 1;
+        lb $a0, $t2($t6)
                         #      //System.out.println("number is" + number);
                         #    }
+done:                        
                         #    //System.out.println("number is" + number);
                         #    return number;
                         #}
