@@ -1,0 +1,66 @@
+# Grading Report
+# Github Account: JackSalazar
+# Assignment:    "44-nextInt"
+# --- Due Date:        "Nov 17 23:59 PST"
+# --- Version Graded:  "graded_version (e115776)"
+# --- Version Date:    "Nov 17 00:04 "
+# --- Status:          "Submission On Time"
+
+   0 Points:  Test Cases (10 Points):
+                    no additional test cases
+  15 Points:  Java Execution (15 Points):
+  15 Points:  Java Code (15 Points):
+  15 Points:  Java TAC Execution (15 Points):
+  15 Points:  Java TAC Code (15 Points):
+  10 Points:  MIPS Execution (15 Points):
+                    errors
+  13 Points:  MIPS Code (15 Points):
+                    messy,
+   2 Points:  Additional Comments / Deductions: (0 Points):
+                    use of in_range to simply things.. but you need to pull it out of the cond for java TAC
+----
+  85 Points:  Total
+
+ASSIGNMENT_44_total="85"        # JackSalazar
+
+BRANCHES:
+  java
+  java_tac
+* main
+  mips
+
+TAGS:
+java_submitted
+java_tac_submitted
+mips_submitted
+
+STUDENT COMMIT HISTORY:
+
+* Due Date: Nov 17 23:59 PST  -----------------
+*    e115776  Nov 17 00:04 PST  (HEAD -> main, tag: mips_submitted, tag: java_tac_submitted, tag: java_submitted, tag: graded_version, origin/main, origin/HEAD, grading_information)
+|\  
+| *  8b9b198  Nov 17 00:03 PST  (origin/mips, mips)
+| *  c22a178  Nov 16 23:35 PST 
+| *  306514f  Nov 16 22:00 PST 
+| *  466cd33  Nov 16 19:57 PST 
+| *  8612ca9  Nov 16 18:49 PST 
+| *  06f78fa  Nov 16 17:53 PST 
+| *  d744b8d  Nov 15 21:02 PST 
+| *  9826d02  Nov 15 20:23 PST 
+| *  bb799e2  Nov 15 20:06 PST 
+|/  
+*  36d3694  Nov 15 20:00 PST 
+*  99f20c2  Nov 15 19:58 PST 
+*  eea59d7  Nov 15 19:55 PST 
+*  b49357b  Nov 15 19:54 PST 
+*  c107e8d  Nov 15 19:08 PST  (origin/java_tac, java_tac)
+*    7f9ce8a  Nov 15 18:41 PST 
+|\  
+| *  baad91d  Nov 15 18:40 PST 
+| *  c99ac08  Nov 15 18:16 PST  (origin/java, java)
+| *  b441007  Nov 15 18:01 PST 
+| *  bfce5b9  Nov 15 17:44 PST 
+| *  5cb71de  Nov 15 17:40 PST 
+|/  
+*  6ef01de  Nov 06 10:32 PST 
+
